@@ -20,11 +20,12 @@ app.all('/launch', (req, resp) => {
     //Set conversation LiveId
     //Set conversation customerId to req.query.customerId
     //Send Init Message to conversation.customerId
-
-    var conv = convCore.createConv(req.query.customerId, req.query.brand);
-    liveEngageCore.initConv(conv.uuid)
-
-    resp.sendStatus(200);
+    var brand = req.query.brand.replace(/\s/g, '');
+    var conv = convCore.createConv(req.query.customerId, brand);
+    liveEngageCore.initConv(conv.customerId)
+    var url = "https://www." + conv.brand + ".com"
+    console.log(conv)
+    resp.redirect(url);
 });
 
 //INBOUND MESSAGE
