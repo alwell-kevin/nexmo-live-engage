@@ -1,20 +1,20 @@
 var conversationList = {};
 
 class Conversation {
-    constructor(phone) {
-        this.uuid = Math.random();
-        this.phone = phone;
+    constructor(customerId, brand) {
+        this.customerId = customerId;
+        this.brand = brand
     }
 }
 
-var getConv = (uuid) => {
-    return conversationList[uuid]
+var getConv = (customerId) => {
+    return conversationList[customerId]
 }
 
-var createConv = (phone) => {
-    var conv = new Conversation(phone);
+var createConv = (customerId) => {
+    var conv = new Conversation(customerId);
 
-    conversationList[conv.uuid] = conv;
+    conversationList[conv.customerId] = conv;
 
     return conv
 }

@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const convCore = require('./convCore.js')
-const liveEngageCore = require('./integrations/liveEngageIntegration.js')
+const liveEngageCore = require('./integrations/chatIntegration.js')
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -14,17 +14,23 @@ app.use(bodyParser.json({
     type: 'application/json'
 }));
 
-//http://localhost:3000/pool/create?key=374609c6&secret=330ef6e8837b1b5f&pool_id=Adidas_Verify_Pool
-
-//CREATE POOL
+//LAUNCH CONVERSATION
 app.all('/launch', (req, resp) => {
     //Create conversation instance.
     //Set conversation LiveId
-    //Set conversation phone to req.query.phone
-    //Send Init Message to conversation.phone
+    //Set conversation customerId to req.query.customerId
+    //Send Init Message to conversation.customerId
 
-    var conv = convCore.createConv(req.query.phone);
+    var conv = convCore.createConv(req.query.customerId, req.query.brand);
     liveEngageCore.initConv(conv.uuid)
+
+    resp.sendStatus(200);
+});
+
+//INBOUND MESSAGE
+app.all('/inbound/sms', (req, resp) => {
+    var conv = convCore.getConv(req.query.from)
+    liveEngageCore.handleInboundSms(req.query.text, req.query.from)
 
     resp.sendStatus(200);
 });
