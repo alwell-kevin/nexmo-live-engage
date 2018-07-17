@@ -1,23 +1,23 @@
 var conversationList = {};
 
 class Conversation {
-    constructor(customerId, brand) {
+    constructor(customerId, brand, conversationId) {
         this.customerId = customerId;
-        this.brand = brand
+        this.brand = brand;
+        this.conversationId = conversationId
     }
 }
 
 var getConv = (customerId) => {
-  console.log("Getting ConvID: ", conversationList[customerId])
+    console.log("Getting ConvID: ", conversationList[customerId])
     return conversationList[customerId]
 }
 
-var createConv = (customerId, brand) => {
-    var conv = new Conversation(customerId, brand);
+var createConv = (customerId, brand, conversationId) => {
+    var conv = new Conversation(customerId, brand, conversationId);
     conversationList[conv.customerId] = conv;
-    
     console.log("Created a new conversation: ", conversationList[conv.customerId])
-    
+
     return conversationList[conv.customerId]
 }
 

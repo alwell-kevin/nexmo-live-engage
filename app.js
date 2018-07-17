@@ -13,21 +13,12 @@ app.use(bodyParser.json({
     type: 'application/json'
 }));
 
-//LAUNCH CONVERSATION
+//LAUNCH CONVERSATION ON SMS & LP
 app.all('/launch', (req, resp) => {
-
-    //Get LP AppJWT
-    liveEngageCore.getAppJwt();
-
-    //Create conversation instance.
-    //Set conversation LiveId
-    //Set conversation customerId to req.query.customerId
-    //Send Init Message to conversation.customerId
     var brand = req.query.brand.replace(/\s/g, '');
-    var conv = convCore.createConv(req.query.customerId, brand);
-    liveEngageCore.initConv(conv.customerId)
-    var url = "https://www." + conv.brand + ".com"
-    console.log(conv)
+    var customerId = req.query.customerId;
+    liveEngageCore.initConv(customerId, brand);
+    var url = "https://www." + brand + ".com"
     resp.redirect(url);
 });
 
