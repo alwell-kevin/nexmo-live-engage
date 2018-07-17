@@ -24,6 +24,7 @@ app.all('/launch', (req, resp) => {
 
 //INBOUND MESSAGE
 app.all('/inbound/sms', (req, resp) => {
+    console.log(req.body)
     var conv = convCore.getConv(req.query.from)
     liveEngageCore.handleInboundSms(req.query.text, req.query.from)
 

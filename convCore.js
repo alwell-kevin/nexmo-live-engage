@@ -9,6 +9,7 @@ class Conversation {
 }
 
 var getConv = (customerId) => {
+    console.log("*******************customerId: ", customerId, "list: ", conversationList, conversationList.Conversation.customerId)
     console.log("Getting ConvID: ", conversationList[customerId])
     return conversationList[customerId]
 }
