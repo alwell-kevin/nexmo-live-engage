@@ -34,14 +34,14 @@ var initConv = (customerId, brand) => {
 }
 
 var handleInboundSms = (customerId, message) => {
-    var conv = getConv(customerId);
-    //Forward to live Engage Platform
+    var conv = convCore.getConv(customerId);
 
-    console.log("INBOUND SMS: ", message, "CUSTOMER: ", customerId);
+    //Forward to live Engage Platform
+    console.log("INBOUND SMS: ", message, "CUSTOMER: ", customerId, "CONV: ", conv);
 }
 
 var handleInboundAgent = (customerId, message) => {
-    var conv = getConv(conv);
+    var conv = convCore.getConv(conv);
 
     nexmo.message.sendSms(process.env.NEXMO_NUM, conv.customerId, message);
 }
