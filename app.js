@@ -30,6 +30,31 @@ app.all('/inbound/sms', (req, resp) => {
     resp.sendStatus(200);
 });
 
+app.all("/event/content/standard", (req, resp) => {
+    console.log(req)
+    resp.sendStatus(200);
+});
+
+app.all("/event/content/rich", (req, resp) => {
+    console.log(req)
+    resp.sendStatus(200);
+});
+
+app.all("/event/status/accept", (req, resp) => {
+    console.log(req)
+    resp.sendStatus(200);
+});
+
+app.all("/event/state/chat", (req, resp) => {
+    console.log(req)
+    resp.sendStatus(200);
+});
+
+app.all("/event/state/notify", (req, resp) => {
+    console.log(req)
+    resp.sendStatus(200);
+});
+
 // Start server
 app.listen(port, () => {
     console.log('Express server started on port ' + port);
