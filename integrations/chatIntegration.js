@@ -51,14 +51,14 @@ var getAppJwt = () => {
     };
 
     request(options, (err, res, body) => {
-        AppToken = body;
-        console.log("GET APP JWT: ", AppToken);
+        AppToken = JSON.parse(body);
+        console.log("GET APP JWT: ", AppToken.access_token);
     })
 }
 
 var getConsumerJwt = () => {
     var params = {
-        "ext_consumer_id": "kalwell"
+        "ext_consumer_id": "nexmo_google_customer"
     }
 
     var options = {
@@ -67,13 +67,15 @@ var getConsumerJwt = () => {
         json: params,
         headers: {
             "Content-Type": "application/json",
-            "Authorization": AppToken.token_type + " " + AppToken.access_token
+            "Authorization": AppToken.access_token
         }
     };
 
+    console.log("Consumer options: ", options)
+
     request(options, (err, res, body) => {
         AppToken = body;
-        console.log("GET APP JWT: ", AppToken);
+        console.log("GET Consumer JWT: ", AppToken);
     })
 }
 
