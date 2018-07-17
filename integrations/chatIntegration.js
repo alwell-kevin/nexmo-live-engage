@@ -1,5 +1,7 @@
 var convCore = require('../convCore.js');
 var Nexmo = require('nexmo');
+const request = require('request');
+var AppToken = {};
 
 var nexmo = new Nexmo({
     apiKey: process.env.API_KEY,
@@ -15,7 +17,7 @@ var initConv = (customerId) => {
 
     if (isnum) {
         console.log("Sending message to: ", process.env.NEXMO_NUMBER);
-        
+
         // IMPROVE INITIAL MESSAGE BY USING THE BRAND IN THE MESSAGE.
         nexmo.message.sendSms(process.env.NEXMO_NUMBER, conv.customerId, initialMessage);
     } else {
@@ -39,6 +41,43 @@ var handleInboundAgent = (customerId, message) => {
     nexmo.message.sendSms(process.env.NEXMO_NUM, conv.customerId, message);
 }
 
+var getAppJwt = () => {
+    var options = {
+        uri: "https://va.sentinel.liveperson.net/sentinel/api/account/" + process.env.LIVE_PERSON_ACCT_NUM + "/app/token?v=1.0&grant_type=client_credentials&client_id=" + process.env.LIVE_PERSON_CLIENT_ID + "&client_secret=" + process.env.LIVE_PERSON_CLIENT_SECRET,
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    };
+
+    request(options, (err, res, body) => {
+        AppToken = body;
+        console.log("GET APP JWT: ", AppToken);
+    })
+}
+
+var getConsumerJwt = () => {
+    var params = {
+        "ext_consumer_id": "kalwell"
+    }
+
+    var options = {
+        uri: "https://va.idp.liveperson.net/api/account/" + process.env.LIVE_PERSON_ACCT_NUM + "/consumer?v=1.0",
+        method: 'POST',
+        json: params,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": AppToken.token_type + " " + AppToken.access_token
+        }
+    };
+
+    request(options, (err, res, body) => {
+        AppToken = body;
+        console.log("GET APP JWT: ", AppToken);
+    })
+}
+
 module.exports.initConv = initConv;
 module.exports.handleInboundSms = handleInboundSms;
 module.exports.handleInboundAgent = handleInboundAgent;
+module.exports.getAppJwt = getAppJwt;

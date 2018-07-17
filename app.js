@@ -3,7 +3,6 @@ require('dotenv').config()
 var https = require('https');
 const express = require('express');
 const bodyParser = require('body-parser');
-const request = require('request');
 const convCore = require('./convCore.js')
 const liveEngageCore = require('./integrations/chatIntegration.js')
 
@@ -16,6 +15,10 @@ app.use(bodyParser.json({
 
 //LAUNCH CONVERSATION
 app.all('/launch', (req, resp) => {
+
+    //Get LP AppJWT
+    liveEngageCore.getAppJwt();
+
     //Create conversation instance.
     //Set conversation LiveId
     //Set conversation customerId to req.query.customerId
