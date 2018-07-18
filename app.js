@@ -32,11 +32,11 @@ app.all('/inbound/sms', (req, resp) => {
 });
 
 app.all("/event/content/standard", (req, resp) => {
-    console.log("STANDARD CONTENT: ", req.body)
+    console.log("STANDARD CONTENT: ", req.body.body.changes)
 
     console.log("_______________________________________________")
 
-    console.log("STANDARD CONTENT: ", req)
+    console.log("STANDARD CONTENT: ", req.body.body)
 
     console.log("***********************************************")
     resp.sendStatus(200);
