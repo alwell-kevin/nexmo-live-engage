@@ -38,10 +38,11 @@ var handleInboundSms = (customerId, message) => {
 
     //Forward to live Engage Platform
     console.log("INBOUND SMS: ", message, "CUSTOMER: ", customerId, "CONV: ", conv);
+    sendLivePersonMessage(conv.conversationId, message)
 }
 
 var handleInboundAgent = (customerId, message) => {
-    var conv = convCore.getConv(conv);
+    var conv = convCore.getConv(customerId);
 
     nexmo.message.sendSms(process.env.NEXMO_NUM, conv.customerId, message);
 }
@@ -145,6 +146,39 @@ createLiveEngageConv = () => {
             var conversationId = resp[1].body.conversationId;
             console.log("CREATED NEW CONV: ", conversationId);
             resolve(conversationId);
+        })
+    })
+}
+
+var sendLivePersonMessage = (convId, message) => {
+    return new Promise((resolve, reject) => {
+        var params = {
+            "kind": "req",
+            "id": "1",
+            "type": "ms.PublishEvent",
+            "body": {
+                "dialogId": convId,
+                "event": {
+                    "type": "ContentEvent",
+                    "contentType": "text/plain",
+                    "message": message
+                }
+            }
+        }
+
+        var options = {
+            uri: "https://va.msg.liveperson.net/api/account/" + process.env.LIVE_PERSON_ACCT_NUM + "/messaging/consumer/conversation/send?v=3",
+            method: 'POST',
+            json: params,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": AppToken.access_token,
+                "X-LP-ON-BEHALF": ConsumerToken.token
+            }
+        };
+
+        request(options, (err, res, resp) => {
+            resolve();
         })
     })
 }
