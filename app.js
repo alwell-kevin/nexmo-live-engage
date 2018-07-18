@@ -24,21 +24,26 @@ app.all('/launch', (req, resp) => {
 
 //INBOUND MESSAGE
 app.all('/inbound/sms', (req, resp) => {
+    var message = req.query.text;
+    console.log("_______________________________________________")
+    console.log("SMS INBOUND: ", message);
+    console.log("***********************************************")
     //NOT GETTING INBOUND SMS. MIGHT NOT BE GETTING REQ.body as expected
     var conv = convCore.getConv(req.query.msisdn)
-    liveEngageCore.handleInboundSms(req.query.msisdn, req.query.text)
+    liveEngageCore.handleInboundSms(req.query.msisdn, message)
 
     resp.sendStatus(200);
 });
 
 app.all("/event/content/standard", (req, resp) => {
-    console.log("STANDARD CONTENT: ", req.body.body.changes)
-
+    var msg = req.body.body.changes[0].event.message;
+    var convId = req.body.body.changes[0].dialogId;
     console.log("_______________________________________________")
-
-    console.log("STANDARD CONTENT: ", req.body.body)
-
+    console.log("AGENT INBOUND: ", msg);
     console.log("***********************************************")
+    if (msg && convId) {
+        liveEngageCore.handleInboundAgent(convId, msg);
+    }
     resp.sendStatus(200);
 });
 

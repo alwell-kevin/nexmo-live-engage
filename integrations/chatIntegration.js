@@ -41,8 +41,8 @@ var handleInboundSms = (customerId, message) => {
     sendLivePersonMessage(conv.conversationId, message)
 }
 
-var handleInboundAgent = (customerId, message) => {
-    var conv = convCore.getConv(customerId);
+var handleInboundAgent = (convId, message) => {
+    var conv = convCore.getConvByConvId(convId);
 
     nexmo.message.sendSms(process.env.NEXMO_NUM, conv.customerId, message);
 }
