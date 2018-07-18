@@ -38,8 +38,10 @@ app.all('/inbound/sms', (req, resp) => {
 app.all("/event/content/standard", (req, resp) => {
     var msg = req.body.body.changes[0].event.message;
     var convId = req.body.body.changes[0].dialogId;
+    console.log("***********************************************")
+    console.log(req.body.body.changes[0]);
     console.log("_______________________________________________")
-    console.log("AGENT INBOUND: ", msg);
+    console.log("AGENT INBOUND: ", msg, convId);
     console.log("***********************************************")
     if (msg && convId) {
         liveEngageCore.handleInboundAgent(convId, msg);
