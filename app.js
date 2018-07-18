@@ -32,7 +32,13 @@ app.all('/inbound/sms', (req, resp) => {
 });
 
 app.all("/event/content/standard", (req, resp) => {
-    console.log(req.body)
+    console.log("STANDARD CONTENT: ", req.body)
+
+    console.log("_______________________________________________")
+
+    console.log("STANDARD CONTENT: ", req)
+
+    console.log("***********************************************")
     resp.sendStatus(200);
 });
 
@@ -47,7 +53,7 @@ app.all("/event/status/accept", (req, resp) => {
 });
 
 app.all("/event/state/chat", (req, resp) => {
-    console.log(req.body)
+    // console.log(req.body)
     resp.sendStatus(200);
 });
 
