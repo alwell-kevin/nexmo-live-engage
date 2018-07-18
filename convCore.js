@@ -14,15 +14,14 @@ var getConvByConvId = (convId) => {
     var conversation;
     console.log("In getConvByConvId", convId)
 
-    conversationList.forEach(function(convo, key) {
-        console.log("LOOPING THORUGH CONVERSATIONS: ", convo, convId, convo.conversationId, typeof convo.conversationId, typeof convId);
-        if (convo.conversationId === convId) {
+    Object.values(conversationList).forEach(function(con) {
+        if (con.conversationId === convId) {
             //Matching Conversation
-            console.log("Getting ConvID: ", convo);
-            conversation = convo;
+            console.log("Getting ConvID: ", con);
+            conversation = con;
         }
     });
-
+    
     console.log("IN CONV BY CONV ID : ", conversation);
 
     return conversation

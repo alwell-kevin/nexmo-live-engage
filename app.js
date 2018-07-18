@@ -69,6 +69,7 @@ app.all("/event/state/notify", (req, resp) => {
     resp.sendStatus(200);
 });
 
+
 // Start server
 app.listen(port, () => {
     console.log('Express server started on port ' + port);
