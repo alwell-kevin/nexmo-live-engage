@@ -42,8 +42,10 @@ var handleInboundSms = (customerId, message) => {
 }
 
 var handleInboundAgent = (convId, message) => {
+  console.log("In handle inobund agent1: ", convId, message)
     var conv = convCore.getConvByConvId(convId);
 
+    console.log("In handle inobund agent CONV2: ", conv)
     nexmo.message.sendSms(process.env.NEXMO_NUM, conv.customerId, message);
 }
 

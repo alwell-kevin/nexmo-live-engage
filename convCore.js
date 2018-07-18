@@ -12,14 +12,16 @@ var getConv = (customerId) => {
 
 var getConvByConvId = (convId) => {
     var conversation;
-
+    console.log("In getConvByConvId", convId)
     for (var i = 0; i < conversationList.length; i++) {
+        console.log("Looping: ", i, conversationList[i].conversationId, convId, typeof conversationList[i].conversationId, typeof convId);
         if (conversationList[i].conversationId === convId) {
             //Matching Conversation
             console.log("Getting ConvID: ", conversationList[i]);
             conversation = conversationList[i];
         }
     }
+    console.log("IN CONV BY CONV ID : ", conversation);
 
     return conversation
 }
